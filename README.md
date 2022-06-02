@@ -215,20 +215,8 @@ void loop() {
 
 ```
 
-### Sortida pel terminal serie i display:
+### Explicació del codi:
 
-
-https://user-images.githubusercontent.com/100867309/171381156-48ad0ec6-ec2e-45cd-b8c0-61bd8b0ca546.mp4
-
-
-### Montaje:
-
-![](p5mont.jpeg)
-
-
-### Aclaraciones del código:
-
-Para las aclaraciones vamos a separar el codigo en varios apartados de manera que sea mas facil de comprender, para empezar tenemos que definir todas las librerias que sean necessarias, definir variables, etc... es decir hay que inicializar el codigo:
 ```
 #include <Arduino.h>
 
