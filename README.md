@@ -217,67 +217,7 @@ void loop() {
 
 ### Explicació del codi:
 
-```
-#include <Arduino.h>
-
-void init_temp_hum_task(void);
-
-// For a connection via I2C using the Arduino Wire include:
-#include <Wire.h>               // Only needed for Arduino 1.6.5 and earlier
-#include "SSD1306Wire.h"        // legacy: #include "SSD1306.h"
-// OR #include "SH1106Wire.h"   // legacy: #include "SH1106.h"
-
-// For a connection via I2C using brzo_i2c (must be installed) include:
-// #include <brzo_i2c.h>        // Only needed for Arduino 1.6.5 and earlier
-// #include "SSD1306Brzo.h"
-// OR #include "SH1106Brzo.h"
-
-// For a connection via SPI include:
-// #include <SPI.h>             // Only needed for Arduino 1.6.5 and earlier
-// #include "SSD1306Spi.h"
-// OR #include "SH1106SPi.h"
-
-
-// Optionally include custom images
-#include "images.h"
-
-#include "SparkFunHTU21D.h"
-
-//Create an instance of the object
-HTU21D myHumidity;
-
-
-
-// Initialize the OLED display using Arduino Wire:
-SSD1306Wire display(0x3c, SDA, SCL);   // ADDRESS, SDA, SCL  -  SDA and SCL usually populate automatically based on your board's pins_arduino.h e.g. https://github.com/esp8266/Arduino/blob/master/variants/nodemcu/pins_arduino.h
-// SSD1306Wire display(0x3c, D3, D5);  // ADDRESS, SDA, SCL  -  If not, they can be specified manually.
-// SSD1306Wire display(0x3c, SDA, SCL, GEOMETRY_128_32);  // ADDRESS, SDA, SCL, OLEDDISPLAY_GEOMETRY  -  Extra param required for 128x32 displays.
-// SH1106Wire display(0x3c, SDA, SCL);     // ADDRESS, SDA, SCL
-
-// Initialize the OLED display using brzo_i2c:
-// SSD1306Brzo display(0x3c, D3, D5);  // ADDRESS, SDA, SCL
-// or
-// SH1106Brzo display(0x3c, D3, D5);   // ADDRESS, SDA, SCL
-
-// Initialize the OLED display using SPI:
-// D5 -> CLK
-// D7 -> MOSI (DOUT)
-// D0 -> RES
-// D2 -> DC
-// D8 -> CS
-// SSD1306Spi display(D0, D2, D8);  // RES, DC, CS
-// or
-// SH1106Spi display(D0, D2);       // RES, DC
-
-
-#define DEMO_DURATION 3000
-typedef void (*Demo)(void);
-
-int demoMode = 0;
-int counter = 1;
-```
-
-Una vez hecho esto, podemos empezar a darle forma, comenzamos por el setup, el cual se va a encargar de hacer unos prints y inicializar el display para poder usarlo posteriormente.
+Primer de tot, tenim el setup, el qual s'encarrega de inicialitzar el display amb els prints necessàris.
 ```
 void setup() {
   Serial.begin(115200);
@@ -298,7 +238,9 @@ void setup() {
 
 }
 ```
-Seguidamente vienen voids que definen varias cosas dentro del display, entre ellas las coordenadas, y muchas otras que no se usan pero se podrian como la implementacion de imagenes, etc... Pero siempre hay que tener en cuenta que display usamos ya que el nuestro por ejemplo es monocromatico de manera que no se pueden implementar colores en este, solo blanco y negro.
+
+A continuació les funcions void que indiquen tot tipus de dades dins del display, encara que en el cas del nostre display no podrem utilitzar la majoria d'aquestes funcions degut a que es un model bastant limitat. Només treu dades en blanc i negre.
+
 ```
 void drawFontFaceDemo() {
   // Font Demo1
@@ -385,7 +327,7 @@ Demo demos[] = {drawFontFaceDemo, drawTextFlowDemo, drawTextAlignmentDemo, drawR
 int demoLength = (sizeof(demos) / sizeof(Demo));
 long timeSinceLastModeSwitch = 0;
 ```
-Finalmente el loop, el cual se va a encargar de mostrar por el display y pantalla todo lo necessario, temperatura, humedad, el texto, etc...
+Per últim tenim el loop, el qual farà possible mostrar per pantalla del diplay totes les dades necessàries.
 
 ```
 void loop() {
